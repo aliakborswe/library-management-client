@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { BookOpenText, Menu, X } from "lucide-react";
+import { BookOpenText, Menu, Moon, Sun, X } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -8,6 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Link, NavLink, useLocation } from "react-router";
+import { useTheme } from "@/providers/theme-provider";
 
 const navItems = [
   { name: "Home", to: "/" },
@@ -18,6 +19,7 @@ const navItems = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { setTheme, theme } = useTheme();
   const { pathname } = useLocation();
 
   // Modified navbar scrolling effect
@@ -68,6 +70,20 @@ const Navbar = () => {
             <ActiveLink to={item.to}>{item.name}</ActiveLink>
           </div>
         ))}
+        <div>
+          <button
+            onClick={() =>
+              theme === "light" ? setTheme("dark") : setTheme("light")
+            }
+            className='flex justify-center items-center'
+          >
+            {theme === "light" ? (
+              <Sun className='rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
+            ) : (
+              <Moon className='rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />
+            )}
+          </button>
+        </div>
       </div>
     );
   };
@@ -79,9 +95,9 @@ const Navbar = () => {
         ${isVisible ? "translate-y-0" : "-translate-y-full"} ${
           pathname === "/"
             ? scrolled
-              ? "shadow-2xs"
-              : "shadow-2xs"
-            : "shadow-2xs"
+              ? "shadow-2xs shadow-accent"
+              : "shadow-2xs shadow-accent"
+            : "shadow-2xs shadow-accent"
         }
       `}
       >
@@ -102,7 +118,7 @@ const Navbar = () => {
           <div className='block lg:hidden'>
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <div className='text-black'>
+                <div className='text-primary'>
                   {open ? (
                     <X className='h-8 w-8' />
                   ) : (
@@ -138,7 +154,9 @@ export const ActiveLink = ({ to, children }: IActiveLink) => {
   return (
     <NavLink
       to={to}
-      className={({ isActive }) => `text-md font-semibold text-primary ${isActive ? "text-chart-2" : ""}`}
+      className={({ isActive }) =>
+        `${isActive ? "text-chart-2" : ""} "text-md font-semibold text-primary"`
+      }
     >
       {children}
     </NavLink>
