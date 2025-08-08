@@ -10,7 +10,7 @@ import {
   XCircle,
   ArrowLeftCircle,
 } from "lucide-react";
-import type { IBook } from "@/types";
+import type { IBook } from "@/utils/types";
 import Wrapper from "@/components/common/Wrapper";
 
 export default function SingleBook() {
@@ -116,9 +116,7 @@ export default function SingleBook() {
             <div className='flex items-center space-x-3'>
               <Hash className='h-5 w-5' />
               <div>
-                <p className='text-sm font-medium'>
-                  ISBN
-                </p>
+                <p className='text-sm font-medium'>ISBN</p>
                 <p className='text-gray-900 dark:text-gray-100'>{book.isbn}</p>
               </div>
             </div>
@@ -126,9 +124,7 @@ export default function SingleBook() {
             <div className='flex items-center space-x-3'>
               <Users className='h-5 w-5' />
               <div>
-                <p className='text-sm font-medium'>
-                  Available Copies
-                </p>
+                <p className='text-sm font-medium'>Available Copies</p>
                 <p className='font-semibold'>
                   {book.copies} {book.copies === 1 ? "copy" : "copies"}
                 </p>
@@ -140,12 +136,8 @@ export default function SingleBook() {
             <>
               <Separator />
               <div>
-                <h3 className='text-lg font-semibold mb-2'>
-                  Description
-                </h3>
-                <p className='leading-relaxed'>
-                  {book.description}
-                </p>
+                <h3 className='text-lg font-semibold mb-2'>Description</h3>
+                <p className='leading-relaxed'>{book.description}</p>
               </div>
             </>
           )}

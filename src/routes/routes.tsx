@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
 import AllBooks from "../books/AllBooks";
 import SingleBook from "@/pages/SingleBook";
+import CreateBook from "@/pages/CreateBook";
 
 const AppRoutes = () => {
   return (
@@ -11,6 +12,7 @@ const AppRoutes = () => {
         <Route index element={<Home />} />
         <Route path='all-books' element={<AllBooks />} />
         <Route path='books/:id' element={<SingleBook />} />
+        <Route path='add-book' element={<CreateBook />} />
       </Route>
     </Routes>
   );

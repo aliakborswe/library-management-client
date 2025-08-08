@@ -1,6 +1,6 @@
 import { useGetBookQuery } from "@/redux/api/baseApi";
 import { useNavigate } from "react-router";
-import type { IBook } from "@/types";
+import type { IBook } from "@/utils/types";
 import { Card } from "@/components/ui/card";
 import { XCircle } from "lucide-react";
 import { useEffect, useState } from "react";

@@ -3,7 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://library-management-api-kappa-eight.vercel.app",
+    // baseUrl: "https://library-management-api-kappa-eight.vercel.app",
+    baseUrl: "http://localhost:8000",
   }),
   tagTypes: ["Book", "Borrow"],
   endpoints: (builder) => ({
@@ -18,7 +19,7 @@ export const baseApi = createApi({
     }),
     createBook: builder.mutation({
       query: (bookData) => ({
-        url: `/books`,
+        url: "/books",
         method: "POST",
         body: bookData,
       }),
@@ -61,5 +62,5 @@ export const {
   useUpdateBookMutation,
   useDeleteBookMutation,
   useBorrowBookMutation,
-  useGetBorrowedBooksSummaryQuery
+  useGetBorrowedBooksSummaryQuery,
 } = baseApi;
