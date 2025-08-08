@@ -12,7 +12,11 @@ export const baseApi = createApi({
         `/books?filter=${query.filter}&skip=${query.skip}&limit=${query.limit}`,
       providesTags: ["Book"],
     }),
+    getBookById: builder.query({
+        query: (id) => `/books/${id}`,
+        providesTags: ["Book"]
+    })
   }),
 });
 
-export const { useGetBookQuery } = baseApi;
+export const { useGetBookQuery, useGetBookByIdQuery } = baseApi;

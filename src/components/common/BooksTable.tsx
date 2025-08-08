@@ -5,7 +5,14 @@ import { Card } from "@/components/ui/card";
 import { XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Pagination } from "../ui/pagination";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
 import { Button } from "../ui/button";
 
 const BooksTable = (props: { items: number }) => {
@@ -32,8 +39,6 @@ const BooksTable = (props: { items: number }) => {
       setTotalPages(Math.ceil(data.totalBooks / itemsPerPage));
     }
   }, [data, itemsPerPage]);
-
-
 
   if (isLoading) {
     return (
@@ -94,15 +99,15 @@ const BooksTable = (props: { items: number }) => {
       </div>
       <div className='hidden md:block mb-2'>
         <Table className='text-center'>
-          <TableHeader className='bg-green-300 dark:bg-green-500 text-black text-center'>
+          <TableHeader className='bg-chart-3 [&>tr>th]:text-center [&>tr>th]:text-background'>
             <TableRow>
-              <TableHead className='text-black'>Title</TableHead>
-              <TableHead className='text-black'>Author</TableHead>
-              <TableHead className='text-black'>Genre</TableHead>
-              <TableHead className='text-black'>ISBN</TableHead>
-              <TableHead className='text-black'>Copies</TableHead>
-              <TableHead className='text-black'>Availability</TableHead>
-              <TableHead className='text-black'>Actions</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead>Author</TableHead>
+              <TableHead>Genre</TableHead>
+              <TableHead>ISBN</TableHead>
+              <TableHead>Copies</TableHead>
+              <TableHead>Availability</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -135,14 +140,8 @@ const BooksTable = (props: { items: number }) => {
                       >
                         Edit
                       </Button>
-                      <div>
-                        BorrowBook
-                      </div>
-                      <Button
-                        variant='destructive'
-                      >
-                        Delete
-                      </Button>
+                      <div>BorrowBook</div>
+                      <Button variant='destructive'>Delete</Button>
                     </TableCell>
                   </TableRow>
                 );
@@ -193,11 +192,7 @@ const BooksTable = (props: { items: number }) => {
                       Edit
                     </Button>
                     <div>BorrowBook</div>
-                    <Button
-                      variant='destructive'
-                    >
-                      Delete
-                    </Button>
+                    <Button variant='destructive'>Delete</Button>
                   </div>
                 </div>
               );
@@ -215,6 +210,6 @@ const BooksTable = (props: { items: number }) => {
       </div>
     </>
   );
-}
+};
 
-export default BooksTable
+export default BooksTable;
