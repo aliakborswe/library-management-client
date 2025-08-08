@@ -13,10 +13,53 @@ export const baseApi = createApi({
       providesTags: ["Book"],
     }),
     getBookById: builder.query({
-        query: (id) => `/books/${id}`,
-        providesTags: ["Book"]
-    })
+      query: (id) => `/books/${id}`,
+      providesTags: ["Book"],
+    }),
+    createBook: builder.mutation({
+      query: (bookData) => ({
+        url: `/books`,
+        method: "POST",
+        body: bookData,
+      }),
+      invalidatesTags: ["Book"],
+    }),
+    updateBook: builder.mutation({
+      query: (bookData) => ({
+        url: `/books/${bookData._id}`,
+        method: "PUT",
+        body: bookData,
+      }),
+      invalidatesTags: ["Book"],
+    }),
+    deleteBook: builder.mutation({
+      query: (id) => ({
+        url: `/books/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Book"],
+    }),
+    borrowBook: builder.mutation({
+      query: (borrowData) => ({
+        url: `/borrow/${borrowData._id}`,
+        method: "POST",
+        body: borrowData,
+      }),
+      invalidatesTags: ["Borrow"],
+    }),
+    getBorrowedBooksSummary: builder.query({
+      query: () => `/borrow`,
+      providesTags: ["Borrow"],
+    }),
   }),
 });
 
-export const { useGetBookQuery, useGetBookByIdQuery } = baseApi;
+export const {
+  useGetBookQuery,
+  useGetBookByIdQuery,
+  useCreateBookMutation,
+  useUpdateBookMutation,
+  useDeleteBookMutation,
+  useBorrowBookMutation,
+  useGetBorrowedBooksSummaryQuery
+} = baseApi;
