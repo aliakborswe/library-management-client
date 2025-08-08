@@ -1,4 +1,4 @@
-import { useGetBookQuery } from "@/redux/api/baseApi";
+import { useDeleteBookMutation, useGetBookQuery } from "@/redux/api/baseApi";
 import { useNavigate } from "react-router";
 import type { IBook } from "@/utils/types";
 import { Card } from "@/components/ui/card";
@@ -14,6 +14,8 @@ import {
   TableRow,
 } from "../ui/table";
 import { Button } from "../ui/button";
+import Swal from "sweetalert2";
+import { Bounce, toast } from "react-toastify";
 
 const BooksTable = (props: { items: number }) => {
   const navigate = useNavigate();
@@ -39,6 +41,39 @@ const BooksTable = (props: { items: number }) => {
       setTotalPages(Math.ceil(data.totalBooks / itemsPerPage));
     }
   }, [data, itemsPerPage]);
+
+  const [deleteBook] = useDeleteBookMutation();
+
+  const handleDelete = async (id: string) => {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await deleteBook(id).unwrap();
+          toast.success(res.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            transition: Bounce,
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error, "error from delete book function");
+      toast.error("Failed to delete book");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -141,7 +176,12 @@ const BooksTable = (props: { items: number }) => {
                         Edit
                       </Button>
                       <div>BorrowBook</div>
-                      <Button variant='destructive'>Delete</Button>
+                      <Button
+                        onClick={() => handleDelete(book._id)}
+                        variant='destructive'
+                      >
+                        Delete
+                      </Button>
                     </TableCell>
                   </TableRow>
                 );
@@ -192,7 +232,12 @@ const BooksTable = (props: { items: number }) => {
                       Edit
                     </Button>
                     <div>BorrowBook</div>
-                    <Button variant='destructive'>Delete</Button>
+                    <Button
+                      onClick={() => handleDelete(book._id)}
+                      variant='destructive'
+                    >
+                      Delete
+                    </Button>
                   </div>
                 </div>
               );
