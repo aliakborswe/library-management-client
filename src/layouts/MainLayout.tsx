@@ -1,17 +1,19 @@
-import Navbar from '@/home/Navbar';
-import { Outlet } from 'react-router';
+import Footer from "@/components/common/Footer";
+import Navbar from "@/components/common/Navbar";
+import { Outlet } from "react-router";
 
 const MainLayout = () => {
-    return (
-      <>
+  return (
+    <>
       <header>
-        <Navbar/>
+        <Navbar />
       </header>
-        <main className='min-h-screen'>
-          <Outlet />
-        </main>
-      </>
-    );
+      <main className='min-h-screen mt-[77px]'>
+        <Outlet />
+      </main>
+      <Footer/>
+    </>
+  );
 };
 
 export default MainLayout;

@@ -91,7 +91,7 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`w-full h-[78px] fixed flex items-center top-0 left-0 z-50 transition-transform duration-300 bg-background
+        className={`w-full h-[78px] fixed flex items-center top-0 left-0 z-50 transition-transform duration-300 bg-accent
         ${isVisible ? "translate-y-0" : "-translate-y-full"} ${
           pathname === "/"
             ? scrolled
