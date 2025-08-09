@@ -35,7 +35,7 @@ import { Bounce, toast } from "react-toastify";
 import type z from "zod";
 
 export default function BorrowBook(props: {
-  available: boolean;
+  available?: boolean;
   book: string;
 }) {
   const [open, setOpen] = useState(false);

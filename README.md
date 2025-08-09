@@ -1,69 +1,70 @@
-# React + TypeScript + Vite
+# [Minimal Library Management System 📚](https://soft-fenglisu-ae0089.netlify.app/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A minimal, client-side **Library Management System** built with **React**, **TypeScript**, **RTK Query (Redux Toolkit Query)** and **Tailwind CSS** (or plain CSS).  
+This project demonstrates clean state management, a simple REST API integration, and a responsive minimalist UI to view/manage books and handle borrowing — **no authentication** required.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Pages / Routes](#pages--routes)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [API Contract (Suggested)](#api-contract-suggested)
+- [Data Models (TypeScript)](#data-models-typescript)
+- [UI / UX Notes](#ui--ux-notes)
+- [Bonus / Optional Features](#bonus--optional-features)
+- [Folder Structure Suggestion](#folder-structure-suggestion)
+- [Scripts](#scripts)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Project Overview
+Build a lightweight library system where users can:
+- View a list of books (table)
+- Add, edit, and delete books
+- Borrow books (manage copies and availability)
+- View a borrow summary (aggregated totals per book)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The app interacts with a RESTful API for persistence and uses **RTK Query** for fetching/mutations and cache management.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Features
+### 1. Public Routes 🚀
+All routes are publicly accessible — no login or auth.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Book Management 🛠️
+- **Book List Table** with columns:
+  - Title | Author | Genre | ISBN | Copies | Availability | Actions
+- **Actions**:
+  - Edit (open form, update via API, refresh UI)
+  - Delete (confirmation dialog)
+  - Borrow (open borrow form)
+  - Add New Book (opens create form)
+- **Business logic**:
+  - `available` toggles or auto-calculated: if `copies === 0` → `available = false`
+  - Create/Update/Delete should reflect instantly using RTK Query invalidation or optimistic updates
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 3. Borrow Book
+- Borrow form fields:
+  - Quantity (number, must be ≤ available copies)
+  - Due Date (date)
+- On successful borrow:
+  - Deduct copies via API
+  - If copies → 0, mark unavailable
+  - Redirect to borrow summary and show success toast
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 4. Borrow Summary
+- Aggregated list of borrowed books:
+  - Book Title | ISBN | Total Quantity Borrowed
+- Retrieved from an aggregation endpoint on server (or aggregated client-side if API doesn’t provide)
+
+---
+
+## Pages / Routes
+Use React Router or similar.
