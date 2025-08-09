@@ -5,6 +5,7 @@ import AllBooks from "../books/AllBooks";
 import SingleBook from "@/pages/SingleBook";
 import CreateBook from "@/pages/CreateBook";
 import BorrowedBooksSummary from "@/pages/BorrowedBooksSummary";
+import UpdateBook from "@/pages/UpdateBook";
 
 const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
         <Route path='all-books' element={<AllBooks />} />
         <Route path='books/:id' element={<SingleBook />} />
         <Route path='add-book' element={<CreateBook />} />
+        <Route path='edit-book/:id' element={<UpdateBook />} />
         <Route path='borrow-summary' element={<BorrowedBooksSummary />} />
       </Route>
     </Routes>

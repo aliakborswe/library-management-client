@@ -17,55 +17,68 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useCreateBookMutation } from "@/redux/api/baseApi";
+import {
+  useCreateBookMutation,
+  useGetBookByIdQuery,
+  useUpdateBookMutation,
+} from "@/redux/api/baseApi";
 import type { ApiError } from "@/utils/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Bounce, toast } from "react-toastify";
 import { bookSchema } from "@/utils/bookSchema";
 import type z from "zod";
 import Wrapper from "@/components/common/Wrapper";
+import { useEffect } from "react";
 
-export default function CreateBook() {
+export default function UpdateBook() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { data } = useGetBookByIdQuery(id, {
+    pollingInterval: 30000,
+    refetchOnMountOrArgChange: true,
+    refetchOnReconnect: true,
+  });
 
   const form = useForm<z.infer<typeof bookSchema>>({
     resolver: zodResolver(bookSchema),
     defaultValues: {
       title: "",
-      author: "",
-      genre: "SCIENCE",
-      isbn: "",
       description: "",
+      author: "",
+      isbn: "",
+      genre: "FICTION",
       copies: 0,
       imageUrl: "",
     },
   });
 
-  const [createBook, { isError, error }] = useCreateBookMutation();
+  useEffect(() => {
+    if (data && data.data) {
+      form.reset({
+        title: data.data?.title || "",
+        description: data.data?.description || "",
+        author: data.data?.author || "",
+        isbn: data.data?.isbn || "",
+        genre: data.data?.genre || "FICTION",
+        copies: data.data?.copies || 0,
+        imageUrl: data.data?.imageUrl || "",
+      });
+    }
+  }, [data, form]);
 
-  if (isError) {
-    const getErrorMessage = (error: unknown): string => {
-      if (error && typeof error === "object" && "data" in error) {
-        const apiError = error as ApiError;
-        const errors = apiError.data?.error?.errors;
-        if (errors) {
-          const firstField = Object.keys(errors)[0];
-          return errors[firstField]?.message || "Something went wrong";
-        }
-      }
-      return "Something went wrong. Please try again.";
-    };
-    toast.error(getErrorMessage(error));
-  }
+  const [updateBook] = useUpdateBookMutation();
 
   async function onSubmit(data: z.infer<typeof bookSchema>) {
     try {
-      const bookData = {
+      const updateBookData = {
         ...data,
+        _id: id,
       };
-      const res = await createBook(bookData).unwrap();
+
+      console.log(updateBookData);
+      const res = await updateBook(updateBookData).unwrap();
       toast.success(res.message, {
         position: "top-right",
         autoClose: 5000,
@@ -90,9 +103,7 @@ export default function CreateBook() {
           onSubmit={form.handleSubmit(onSubmit)}
           className='space-y-4 max-w-3xl mx-auto rounded-md p-5'
         >
-          <h1 className='text-2xl font-bold text-center mb-4'>
-            Add a new book
-          </h1>
+          <h1 className='text-2xl font-bold text-center mb-4'>Update book</h1>
           <FormField
             control={form.control}
             name='title'
@@ -214,7 +225,7 @@ export default function CreateBook() {
           />
 
           <Button type='submit' className='cursor-pointer w-full'>
-            Create
+            Update
           </Button>
         </form>
       </Form>
