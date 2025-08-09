@@ -18,7 +18,7 @@ export interface IBorrow {
 
 export interface BorrowedBookSummary {
   book: {
-    id: string;
+    _id: string;
     title: string;
     isbn: string;
   };

@@ -42,7 +42,7 @@ export const baseApi = createApi({
     }),
     borrowBook: builder.mutation({
       query: (borrowData) => ({
-        url: `/borrow/${borrowData._id}`,
+        url: `/borrow/${borrowData.book}`,
         method: "POST",
         body: borrowData,
       }),

@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDeleteBookMutation, useGetBookQuery } from "@/redux/api/baseApi";
 import { useNavigate } from "react-router";
 import type { IBook } from "@/utils/types";
 import { Card } from "@/components/ui/card";
 import { XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Pagination } from "../ui/pagination";
 import {
   Table,
   TableBody,
@@ -16,6 +16,8 @@ import {
 import { Button } from "../ui/button";
 import Swal from "sweetalert2";
 import { Bounce, toast } from "react-toastify";
+import BorrowBook from "../BorrowBook";
+import Pagination from "../ui/pagination";
 
 const BooksTable = (props: { items: number }) => {
   const navigate = useNavigate();
@@ -69,9 +71,8 @@ const BooksTable = (props: { items: number }) => {
           });
         }
       });
-    } catch (error) {
-      console.log(error, "error from delete book function");
-      toast.error("Failed to delete book");
+    } catch (err: any) {
+      toast.error(err.message);
     }
   };
 
@@ -110,29 +111,7 @@ const BooksTable = (props: { items: number }) => {
   }
   return (
     <>
-      <div
-        className={
-          data && data.totalBooks > 11 && props.items > 6
-            ? "hidden md:flex justify-between items-center"
-            : "hidden"
-        }
-      >
-        <div>
-          <h1
-            className='text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200'
-            style={{ textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)" }}
-          >
-            All Books
-          </h1>
-        </div>
-
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onHandleCurrentPage={setCurrentPage}
-        />
-      </div>
-      <div className='hidden md:block mb-2'>
+      <div className='hidden lg:block mb-2'>
         <Table className='text-center'>
           <TableHeader className='bg-chart-3 [&>tr>th]:text-center [&>tr>th]:text-background'>
             <TableRow>
@@ -175,7 +154,12 @@ const BooksTable = (props: { items: number }) => {
                       >
                         Edit
                       </Button>
-                      <div>BorrowBook</div>
+                      <div>
+                        <BorrowBook
+                          book={book._id}
+                          available={book.available}
+                        />
+                      </div>
                       <Button
                         onClick={() => handleDelete(book._id)}
                         variant='destructive'
@@ -189,15 +173,8 @@ const BooksTable = (props: { items: number }) => {
           </TableBody>
         </Table>
       </div>
-      <div className='md:hidden mb-2'>
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onHandleCurrentPage={setCurrentPage}
-        />
-      </div>
-      <div className='md:hidden mb-3'>
-        <div className='flex flex-wrap justify-center gap-2 items-center'>
+      <div className='lg:hidden mb-3'>
+        <div className='flex flex-wrap justify-center gap-5 items-center'>
           {data.data.length === 0 ? (
             <p className='text-center'>No books available</p>
           ) : (
@@ -231,7 +208,7 @@ const BooksTable = (props: { items: number }) => {
                     <Button onClick={() => navigate(`/edit-book/${book._id}`)}>
                       Edit
                     </Button>
-                    <div>BorrowBook</div>
+                    <BorrowBook book={book._id} available={book.available} />
                     <Button
                       onClick={() => handleDelete(book._id)}
                       variant='destructive'
@@ -246,7 +223,7 @@ const BooksTable = (props: { items: number }) => {
         </div>
       </div>
       {/* Pagination */}
-      <div>
+      <div className="mt-8">
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
