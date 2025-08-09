@@ -115,6 +115,7 @@ const BooksTable = (props: { items: number }) => {
         <Table className='text-center'>
           <TableHeader className='bg-chart-3 [&>tr>th]:text-center [&>tr>th]:text-background'>
             <TableRow>
+              <TableHead>Image</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Author</TableHead>
               <TableHead>Genre</TableHead>
@@ -127,9 +128,10 @@ const BooksTable = (props: { items: number }) => {
           <TableBody>
             {data &&
               data.data &&
-              data.data.map((book: IBook, index: number) => {
+              data.data.map((book: IBook) => {
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={book._id}>
+                    <TableCell><img src={book.imageUrl} accessKey={book.title} className="w-12 h-12 rounded-full"/></TableCell>
                     <TableCell>{book.title}</TableCell>
                     <TableCell>{book.author}</TableCell>
                     <TableCell>{book.genre}</TableCell>
@@ -184,6 +186,11 @@ const BooksTable = (props: { items: number }) => {
                   key={index}
                   className='border w-full sm:w-[325px] p-3 rounded-xl'
                 >
+                    <img
+                      src={book.imageUrl}
+                      accessKey={book.title}
+                      className='aspect-video rounded-t-xl mb-2'
+                    />
                   <h3 className='font-bold'>{book.title}</h3>
                   <p>Author: {book.author}</p>
                   <p>Genre: {book.genre}</p>
@@ -223,7 +230,7 @@ const BooksTable = (props: { items: number }) => {
         </div>
       </div>
       {/* Pagination */}
-      <div className="mt-8">
+      <div className='mt-8'>
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}

@@ -41,7 +41,7 @@ const Pagination = (props: {
     return pages;
   };
 
-  const visilePageNumbers = getVisiblePageNumbers();
+  const visiblePageNumbers = getVisiblePageNumbers();
 
   return (
     <div className='flex justify-center items-center gap-2'>
@@ -61,7 +61,7 @@ const Pagination = (props: {
       >
         &laquo;
       </Button>
-      {visilePageNumbers.map((pageNumber) => {
+      {visiblePageNumbers.map((pageNumber) => {
         return (
           <Button
             key={pageNumber}
