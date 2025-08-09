@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateBookMutation } from "@/redux/api/baseApi";
-import type { ApiError } from "@/utils/types";
+import type { ApiError, IBook } from "@/utils/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
@@ -65,7 +65,7 @@ export default function CreateBook() {
       const bookData = {
         ...data,
       };
-      const res = await createBook(bookData).unwrap();
+      const res = await createBook(bookData as IBook).unwrap();
       toast.success(res.message, {
         position: "top-right",
         autoClose: 5000,

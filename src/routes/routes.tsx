@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
-import AllBooks from "../books/AllBooks";
+import AllBooks from "../pages/AllBooks";
 import SingleBook from "@/pages/SingleBook";
 import CreateBook from "@/pages/CreateBook";
 import BorrowedBooksSummary from "@/pages/BorrowedBooksSummary";

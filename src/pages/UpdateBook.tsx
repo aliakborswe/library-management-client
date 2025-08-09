@@ -18,11 +18,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  useCreateBookMutation,
   useGetBookByIdQuery,
   useUpdateBookMutation,
 } from "@/redux/api/baseApi";
-import type { ApiError } from "@/utils/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router";
@@ -31,6 +29,7 @@ import { bookSchema } from "@/utils/bookSchema";
 import type z from "zod";
 import Wrapper from "@/components/common/Wrapper";
 import { useEffect } from "react";
+import type { IBook } from "@/utils/types";
 
 export default function UpdateBook() {
   const navigate = useNavigate();
@@ -76,9 +75,7 @@ export default function UpdateBook() {
         ...data,
         _id: id,
       };
-
-      console.log(updateBookData);
-      const res = await updateBook(updateBookData).unwrap();
+      const res = await updateBook(updateBookData as IBook).unwrap();
       toast.success(res.message, {
         position: "top-right",
         autoClose: 5000,
@@ -90,7 +87,7 @@ export default function UpdateBook() {
         transition: Bounce,
       });
       form.reset();
-      navigate("/");
+      navigate("/all-books");
     } catch (err: any) {
       toast.error(err.message);
     }

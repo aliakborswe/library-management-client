@@ -7,7 +7,7 @@ export interface IBook {
   description?: string;
   copies: number;
   imageUrl?: string;
-  available: boolean;
+  available?: boolean;
 }
 
 export interface IBorrow {

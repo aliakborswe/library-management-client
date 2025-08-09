@@ -14,7 +14,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { Button } from "../ui/button";
-import Swal from "sweetalert2";
+import Swal, { type SweetAlertResult } from "sweetalert2";
 import { Bounce, toast } from "react-toastify";
 import BorrowBook from "../BorrowBook";
 import Pagination from "../ui/pagination";
@@ -56,7 +56,7 @@ const BooksTable = (props: { items: number }) => {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
-      }).then(async (result) => {
+      }).then(async (result: SweetAlertResult) => {
         if (result.isConfirmed) {
           const res = await deleteBook(id).unwrap();
           toast.success(res.message, {
