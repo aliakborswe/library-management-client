@@ -6,6 +6,8 @@ import SingleBook from "@/pages/SingleBook";
 import CreateBook from "@/pages/CreateBook";
 import BorrowedBooksSummary from "@/pages/BorrowedBooksSummary";
 import UpdateBook from "@/pages/UpdateBook";
+import BaseLayout from "@/layouts/BaseLayout";
+import ErrorPage from "@/error-page";
 
 const AppRoutes = () => {
   return (
@@ -17,6 +19,9 @@ const AppRoutes = () => {
         <Route path='add-book' element={<CreateBook />} />
         <Route path='edit-book/:id' element={<UpdateBook />} />
         <Route path='borrow-summary' element={<BorrowedBooksSummary />} />
+      </Route>
+      <Route element={<BaseLayout />}>
+        <Route path='*' element={<ErrorPage />} />
       </Route>
     </Routes>
   );
