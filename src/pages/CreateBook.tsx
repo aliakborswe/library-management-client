@@ -26,6 +26,7 @@ import { Bounce, toast } from "react-toastify";
 import { bookSchema } from "@/utils/bookSchema";
 import type z from "zod";
 import Wrapper from "@/components/common/Wrapper";
+import { Banner } from "@/components/common/Banner";
 
 export default function CreateBook() {
   const navigate = useNavigate();
@@ -84,140 +85,143 @@ export default function CreateBook() {
   }
 
   return (
-    <Wrapper>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className='space-y-4 max-w-3xl mx-auto rounded-md p-5'
-        >
-          <h1 className='text-2xl font-bold text-center mb-4'>
-            Add a new book
-          </h1>
-          <FormField
-            control={form.control}
-            name='title'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input placeholder='Title' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='author'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Author</FormLabel>
-                <FormControl>
-                  <Input placeholder='Author' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='description'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea placeholder='Description' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='isbn'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>ISBN</FormLabel>
-                <FormControl>
-                  <Input placeholder='ISBN' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='genre'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Genre</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue={field.value}
-                >
-                  <FormControl className='w-full'>
-                    <SelectTrigger>
-                      <SelectValue placeholder='Select genre' />
-                    </SelectTrigger>
+    <>
+    <Banner className="h-[30vh]" title="Add a new book"/>
+      <Wrapper>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className='space-y-4 max-w-3xl mx-auto rounded-md p-5'
+          >
+            <h1 className='text-2xl font-bold text-center mb-4'>
+              Add a new book
+            </h1>
+            <FormField
+              control={form.control}
+              name='title'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Title' {...field} />
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value='FICTION'>FICTION</SelectItem>
-                    <SelectItem value='NON_FICTION'>NON_FICTION</SelectItem>
-                    <SelectItem value='SCIENCE'>SCIENCE</SelectItem>
-                    <SelectItem value='HISTORY'>HISTORY</SelectItem>
-                    <SelectItem value='BIOGRAPHY'>BIOGRAPHY</SelectItem>
-                    <SelectItem value='FANTASY'>FANTASY</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name='copies'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Copies</FormLabel>
-                <FormControl>
-                  <Input
-                    type='number'
-                    placeholder='Copies'
+            <FormField
+              control={form.control}
+              name='author'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Author</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Author' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='description'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder='Description' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='isbn'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>ISBN</FormLabel>
+                  <FormControl>
+                    <Input placeholder='ISBN' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='genre'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Genre</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
                     value={field.value}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                    defaultValue={field.value}
+                  >
+                    <FormControl className='w-full'>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Select genre' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value='FICTION'>FICTION</SelectItem>
+                      <SelectItem value='NON_FICTION'>NON_FICTION</SelectItem>
+                      <SelectItem value='SCIENCE'>SCIENCE</SelectItem>
+                      <SelectItem value='HISTORY'>HISTORY</SelectItem>
+                      <SelectItem value='BIOGRAPHY'>BIOGRAPHY</SelectItem>
+                      <SelectItem value='FANTASY'>FANTASY</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name='imageUrl'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  Image URL <span className='text-muted'>(optional)</span>
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder='Image URL' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name='copies'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Copies</FormLabel>
+                  <FormControl>
+                    <Input
+                      type='number'
+                      placeholder='Copies'
+                      value={field.value}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button type='submit' className='cursor-pointer w-full'>
-            Create
-          </Button>
-        </form>
-      </Form>
-    </Wrapper>
+            <FormField
+              control={form.control}
+              name='imageUrl'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Image URL <span className='text-muted'>(optional)</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder='Image URL' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type='submit' className='cursor-pointer w-full'>
+              Create
+            </Button>
+          </form>
+        </Form>
+      </Wrapper>
+    </>
   );
 }

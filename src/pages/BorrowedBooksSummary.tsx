@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 import Wrapper from "@/components/common/Wrapper";
+import { Banner } from "@/components/common/Banner";
 
 export default function BorrowedBooksSummary() {
   const { data, isLoading, error } = useGetBorrowedBooksSummaryQuery(
@@ -62,83 +63,91 @@ export default function BorrowedBooksSummary() {
   }
 
   return (
-    <Wrapper>
-      <div className='hidden md:block mb-2'>
-        <Table className='text-center'>
-          <TableHeader className='bg-chart-3 [&>tr>th]:text-center [&>tr>th]:text-background'>
-            <TableRow>
-              <TableHead>Book title</TableHead>
-              <TableHead>ISBN</TableHead>
-              <TableHead>Total Quantity Borrowed</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {[...borrowedBooks]
-              .sort((a, b) => b.totalQuantity - a.totalQuantity)
-              .map((borrowedBook: BorrowedBookSummary) => {
-                return (
-                  <TableRow key={borrowedBook.book._id}>
-                    <TableCell>{borrowedBook.book.title}</TableCell>
-                    <TableCell>
-                      <code className='bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm'>
-                        {borrowedBook.book.isbn}
-                      </code>
-                    </TableCell>
-                    <TableCell>{borrowedBook.totalQuantity}</TableCell>
-                    <TableCell className='flex justify-center gap-2'>
-                      <Button
-                        onClick={() =>
-                          navigate(`/books/${borrowedBook.book._id}`)
-                        }
-                        variant='outline'
-                      >
-                        View book
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </div>
-      <div className='md:hidden mb-3'>
-        <div className='flex flex-wrap justify-center gap-2 items-center'>
-          {[...borrowedBooks].length === 0 ? (
-            <p className='text-center'>No borrowed books available</p>
-          ) : (
-            [...borrowedBooks]
-              .sort((a, b) => b.totalQuantity - a.totalQuantity)
-              .map((borrowedBook: BorrowedBookSummary) => {
-                return (
-                  <div
-                    key={borrowedBook.book._id}
-                    className='border w-full sm:w-[325px] p-3 rounded-xl'
-                  >
-                    <h3 className='font-bold'>{borrowedBook.book.title}</h3>
-                    <p>
-                      ISBN:{" "}
-                      <code className='bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm'>
-                        {borrowedBook.book.isbn}
-                      </code>
-                    </p>
-                    <p>Total Quantity Borrowed: {borrowedBook.totalQuantity}</p>
-                    <div className='flex gap-2 mt-2'>
-                      <Button
-                        onClick={() =>
-                          navigate(`/books/${borrowedBook.book._id}`)
-                        }
-                        variant='outline'
-                      >
-                        View book
-                      </Button>
-                    </div>
-                  </div>
-                );
-              })
-          )}
+    <>
+      <Banner
+        className='h-[40vh]'
+        title='Your Borrowed Collection'
+      />
+      <Wrapper>
+        <div className='hidden md:block mb-2'>
+          <Table className='text-center'>
+            <TableHeader className='bg-chart-3 [&>tr>th]:text-center [&>tr>th]:text-background'>
+              <TableRow>
+                <TableHead>Book title</TableHead>
+                <TableHead>ISBN</TableHead>
+                <TableHead>Total Quantity Borrowed</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {[...borrowedBooks]
+                .sort((a, b) => b.totalQuantity - a.totalQuantity)
+                .map((borrowedBook: BorrowedBookSummary) => {
+                  return (
+                    <TableRow key={borrowedBook.book._id}>
+                      <TableCell>{borrowedBook.book.title}</TableCell>
+                      <TableCell>
+                        <code className='bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm'>
+                          {borrowedBook.book.isbn}
+                        </code>
+                      </TableCell>
+                      <TableCell>{borrowedBook.totalQuantity}</TableCell>
+                      <TableCell className='flex justify-center gap-2'>
+                        <Button
+                          onClick={() =>
+                            navigate(`/books/${borrowedBook.book._id}`)
+                          }
+                          variant='outline'
+                        >
+                          View book
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
         </div>
-      </div>
-    </Wrapper>
+        <div className='md:hidden mb-3'>
+          <div className='flex flex-wrap justify-center gap-2 items-center'>
+            {[...borrowedBooks].length === 0 ? (
+              <p className='text-center'>No borrowed books available</p>
+            ) : (
+              [...borrowedBooks]
+                .sort((a, b) => b.totalQuantity - a.totalQuantity)
+                .map((borrowedBook: BorrowedBookSummary) => {
+                  return (
+                    <div
+                      key={borrowedBook.book._id}
+                      className='border w-full sm:w-[325px] p-3 rounded-xl'
+                    >
+                      <h3 className='font-bold'>{borrowedBook.book.title}</h3>
+                      <p>
+                        ISBN:{" "}
+                        <code className='bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm'>
+                          {borrowedBook.book.isbn}
+                        </code>
+                      </p>
+                      <p>
+                        Total Quantity Borrowed: {borrowedBook.totalQuantity}
+                      </p>
+                      <div className='flex gap-2 mt-2'>
+                        <Button
+                          onClick={() =>
+                            navigate(`/books/${borrowedBook.book._id}`)
+                          }
+                          variant='outline'
+                        >
+                          View book
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })
+            )}
+          </div>
+        </div>
+      </Wrapper>
+    </>
   );
 }

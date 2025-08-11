@@ -4,7 +4,6 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -100,9 +99,6 @@ export default function BorrowBook(props: {
         </DialogTrigger>
         <DialogContent className='sm:max-w-[425px]'>
           <DialogTitle>Borrow this Book</DialogTitle>
-          <DialogDescription className='sr-only'>
-            nothing here
-          </DialogDescription>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
               <FormField

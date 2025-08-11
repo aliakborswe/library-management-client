@@ -19,6 +19,7 @@ import { Bounce, toast } from "react-toastify";
 import BorrowBook from "../BorrowBook";
 import Pagination from "../ui/pagination";
 import UpdateBook from "./UpdateBook";
+import Wrapper from "./Wrapper";
 
 const BooksTable = (props: { items: number }) => {
   const navigate = useNavigate();
@@ -111,7 +112,13 @@ const BooksTable = (props: { items: number }) => {
     );
   }
   return (
-    <>
+    <Wrapper>
+      <div className="flex justify-between items-center py-6">
+        <h2 className="text-xl text-chart-3 font-semibold">Discover Your Next Book</h2>
+        <Button onClick={() => navigate("/add-book")} variant='default'>
+          Add a new book
+        </Button>
+      </div>
       <div className='hidden lg:block mb-2'>
         <Table className='text-center'>
           <TableHeader className='bg-chart-3 [&>tr>th]:text-center [&>tr>th]:text-background'>
@@ -156,9 +163,9 @@ const BooksTable = (props: { items: number }) => {
                         onClick={() => navigate(`/books/${book._id}`)}
                         variant='outline'
                       >
-                        <Eye/>
+                        <Eye />
                       </Button>
-                      <UpdateBook id={book._id}/>
+                      <UpdateBook id={book._id} />
                       <div>
                         <BorrowBook
                           book={book._id}
@@ -169,7 +176,7 @@ const BooksTable = (props: { items: number }) => {
                         onClick={() => handleDelete(book._id)}
                         variant='destructive'
                       >
-                        <Trash2/>
+                        <Trash2 />
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -213,7 +220,7 @@ const BooksTable = (props: { items: number }) => {
                       onClick={() => navigate(`/books/${book._id}`)}
                       variant='outline'
                     >
-                      <Eye/>
+                      <Eye />
                     </Button>
                     <UpdateBook id={book._id} />
                     <BorrowBook book={book._id} available={book.available} />
@@ -221,7 +228,7 @@ const BooksTable = (props: { items: number }) => {
                       onClick={() => handleDelete(book._id)}
                       variant='destructive'
                     >
-                      <Trash2/>
+                      <Trash2 />
                     </Button>
                   </div>
                 </div>
@@ -238,7 +245,7 @@ const BooksTable = (props: { items: number }) => {
           onHandleCurrentPage={setCurrentPage}
         />
       </div>
-    </>
+    </Wrapper>
   );
 };
 
