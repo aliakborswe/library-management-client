@@ -77,7 +77,7 @@ export default function CreateBook() {
         transition: Bounce,
       });
       form.reset();
-      navigate("/");
+      navigate("/all-books");
     } catch (err: any) {
       toast.error(err.message);
     }

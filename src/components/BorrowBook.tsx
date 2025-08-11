@@ -31,6 +31,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { Bounce, toast } from "react-toastify";
 import type z from "zod";
 
@@ -39,6 +40,7 @@ export default function BorrowBook(props: {
   book: string;
 }) {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof borrowSchema>>({
     resolver: zodResolver(borrowSchema),
@@ -82,6 +84,7 @@ export default function BorrowBook(props: {
       });
       form.reset();
       setOpen(false);
+      navigate("/borrow-summary");
     } catch (err: any) {
       toast.error(err.message);
     }
@@ -156,12 +159,14 @@ export default function BorrowBook(props: {
                         />
                       </PopoverContent>
                     </Popover>
-                    <FormMessage /> 
+                    <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <Button type='submit'>Borrow</Button>
+              <Button type='submit' className='w-full'>
+                Borrow
+              </Button>
             </form>
           </Form>
         </DialogContent>

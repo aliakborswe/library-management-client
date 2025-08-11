@@ -3,7 +3,7 @@ import { useDeleteBookMutation, useGetBookQuery } from "@/redux/api/baseApi";
 import { useNavigate } from "react-router";
 import type { IBook } from "@/utils/types";
 import { Card } from "@/components/ui/card";
-import { XCircle } from "lucide-react";
+import { Eye, Trash2, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   Table,
@@ -18,6 +18,7 @@ import Swal, { type SweetAlertResult } from "sweetalert2";
 import { Bounce, toast } from "react-toastify";
 import BorrowBook from "../BorrowBook";
 import Pagination from "../ui/pagination";
+import UpdateBook from "./UpdateBook";
 
 const BooksTable = (props: { items: number }) => {
   const navigate = useNavigate();
@@ -131,7 +132,13 @@ const BooksTable = (props: { items: number }) => {
               data.data.map((book: IBook) => {
                 return (
                   <TableRow key={book._id}>
-                    <TableCell><img src={book.imageUrl} accessKey={book.title} className="w-12 h-12 rounded-full"/></TableCell>
+                    <TableCell>
+                      <img
+                        src={book.imageUrl}
+                        accessKey={book.title}
+                        className='w-12 h-12 rounded-full'
+                      />
+                    </TableCell>
                     <TableCell>{book.title}</TableCell>
                     <TableCell>{book.author}</TableCell>
                     <TableCell>{book.genre}</TableCell>
@@ -144,18 +151,14 @@ const BooksTable = (props: { items: number }) => {
                     <TableCell>
                       {book.available ? "Available" : "Not Available"}
                     </TableCell>
-                    <TableCell className='flex justify-center gap-2'>
+                    <TableCell className='flex justify-center items-center gap-2'>
                       <Button
                         onClick={() => navigate(`/books/${book._id}`)}
                         variant='outline'
                       >
-                        View
+                        <Eye/>
                       </Button>
-                      <Button
-                        onClick={() => navigate(`/edit-book/${book._id}`)}
-                      >
-                        Edit
-                      </Button>
+                      <UpdateBook id={book._id}/>
                       <div>
                         <BorrowBook
                           book={book._id}
@@ -166,7 +169,7 @@ const BooksTable = (props: { items: number }) => {
                         onClick={() => handleDelete(book._id)}
                         variant='destructive'
                       >
-                        Delete
+                        <Trash2/>
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -186,11 +189,11 @@ const BooksTable = (props: { items: number }) => {
                   key={index}
                   className='border w-full sm:w-[325px] p-3 rounded-xl'
                 >
-                    <img
-                      src={book.imageUrl}
-                      accessKey={book.title}
-                      className='aspect-video rounded-t-xl mb-2'
-                    />
+                  <img
+                    src={book.imageUrl}
+                    accessKey={book.title}
+                    className='aspect-video rounded-t-xl mb-2'
+                  />
                   <h3 className='font-bold'>{book.title}</h3>
                   <p>Author: {book.author}</p>
                   <p>Genre: {book.genre}</p>
@@ -210,17 +213,15 @@ const BooksTable = (props: { items: number }) => {
                       onClick={() => navigate(`/books/${book._id}`)}
                       variant='outline'
                     >
-                      View
+                      <Eye/>
                     </Button>
-                    <Button onClick={() => navigate(`/edit-book/${book._id}`)}>
-                      Edit
-                    </Button>
+                    <UpdateBook id={book._id} />
                     <BorrowBook book={book._id} available={book.available} />
                     <Button
                       onClick={() => handleDelete(book._id)}
                       variant='destructive'
                     >
-                      Delete
+                      <Trash2/>
                     </Button>
                   </div>
                 </div>
